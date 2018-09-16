@@ -1,9 +1,10 @@
 package loxc
 
 import loxc.Tokens._
+import loxc.tool.LazyLog
 import org.scalatest.{FlatSpec, Matchers}
 
-class ScannerSpec extends FlatSpec with Matchers {
+class ScannerSpec extends FlatSpec with Matchers with LazyLog {
 
   // Helper method to match with omitted line.
   implicit class ExpectedTokens(completeTokens: List[CompleteToken]) {
@@ -15,7 +16,7 @@ class ScannerSpec extends FlatSpec with Matchers {
 
   behavior of "Scanner"
 
-  it should "lex single char tokens correctly" in {
+  it should "lex single character tokens correctly" in {
     val braces = "( )"
     val tokens = Scanner.tokenize(braces)
     tokens expectTokens List(LeftParen, RightParen, EOF)

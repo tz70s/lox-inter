@@ -1,4 +1,4 @@
-package loxc
+package loxc.tool
 
 object Error {
 

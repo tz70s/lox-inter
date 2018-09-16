@@ -3,6 +3,7 @@ package loxc
 import loxc.Tokens.CompleteToken
 
 import scala.collection.mutable.ArrayBuffer
+import tool.Error
 
 object Scanner {
 

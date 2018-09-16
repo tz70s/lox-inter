@@ -3,17 +3,17 @@ package loxc
 /** Token values. */
 // TODO(tz70s): refactor this boilerplate code.
 object Tokens {
-  case class CompleteToken(token: Token, numOfLine: Int, literal: LiteralValue = Empty, lexeme: String = "")
+  case class CompleteToken(token: Token, numOfLine: Int, literal: LiteralValue = Empty)
 
   sealed trait Token {
-    def apply(numOfLine: Int, literal: String = "", lexeme: String = "") = CompleteToken(this, numOfLine)
+    def apply(numOfLine: Int, literal: String = "") = CompleteToken(this, numOfLine)
   }
 
   sealed trait LiteralValue
   case object Empty extends LiteralValue
-  case class IdentLiteral(literal: String) extends LiteralValue
-  case class StringLiteral(literal: String) extends LiteralValue
-  case class NumberLiteral(literal: Int) extends LiteralValue
+  case class IdentLiteral(value: String) extends LiteralValue
+  case class StringLiteral(value: String) extends LiteralValue
+  case class NumberLiteral(value: Double) extends LiteralValue
 
   sealed trait SingleCharToken extends Token
   case object LeftParen extends SingleCharToken
@@ -50,16 +50,16 @@ object Tokens {
 
   sealed trait Literal extends Token
   case object Ident extends Literal {
-    override def apply(numOfLine: Int, literal: String, lexeme: String = "") =
-      CompleteToken(this, numOfLine, IdentLiteral(literal), lexeme)
+    override def apply(numOfLine: Int, literal: String) =
+      CompleteToken(this, numOfLine, IdentLiteral(literal))
   }
   case object StringLiter extends Literal {
-    override def apply(numOfLine: Int, literal: String, lexeme: String = "") =
-      CompleteToken(this, numOfLine, StringLiteral(literal), lexeme)
+    override def apply(numOfLine: Int, literal: String) =
+      CompleteToken(this, numOfLine, StringLiteral(literal))
   }
   case object Number extends Literal {
-    override def apply(numOfLine: Int, literal: String, lexeme: String = "") =
-      CompleteToken(this, numOfLine, NumberLiteral(literal.toInt), lexeme)
+    override def apply(numOfLine: Int, literal: String) =
+      CompleteToken(this, numOfLine, NumberLiteral(literal.toDouble))
   }
 
   val keyWordsCodec = Map(
@@ -75,8 +75,8 @@ object Tokens {
     "return" -> Return,
     "super" -> Super,
     "this" -> This,
-    "true" -> TrueLiter,
-    "false" -> FalseLiter,
+    "true" -> True,
+    "false" -> False,
     "let" -> Let,
     "while" -> While
   )
@@ -94,8 +94,8 @@ object Tokens {
   case object Return extends KeyWord
   case object Super extends KeyWord
   case object This extends KeyWord
-  case object TrueLiter extends KeyWord
-  case object FalseLiter extends KeyWord
+  case object True extends KeyWord
+  case object False extends KeyWord
   case object Let extends KeyWord
   case object While extends KeyWord
 

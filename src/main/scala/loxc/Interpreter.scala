@@ -6,7 +6,7 @@ import java.nio.file.{Files, Paths}
 
 object Interpreter {
 
-  def main(args: Array[String]): Unit = {
+  def main(args: Array[String]): Unit =
     // Specify file path or using a REPL in single line.
     if (args.length > 1) {
       Console.err.println("Usage: loxc [script]")
@@ -17,13 +17,10 @@ object Interpreter {
       evalRepl()
     }
 
-  }
-
   private def evalFile(path: String): Unit = {
     val bytes = Files.readAllBytes(Paths.get(path))
     eval(new String(bytes, Charset.defaultCharset()))
   }
-
 
   private def evalRepl() = {
     val input = new InputStreamReader(System.in)
@@ -34,8 +31,6 @@ object Interpreter {
     }
   }
 
-  private def eval(source: String) = {
-    val scanner = Scanner(source)
-  }
+  private def eval(source: String) = {}
 
 }

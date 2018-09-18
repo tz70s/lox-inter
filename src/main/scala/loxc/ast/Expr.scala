@@ -3,19 +3,16 @@ package loxc.ast
 import loxc.Tokens.CompleteToken
 
 /**
- * The following bnf notation is the spec of lox grammar, with slightly modified from my own taste.
+ * In the evaluation side:
+ *
+ * The expression will be generally formed into:
  *
  * expression -> literal
- *             | unary
- *             | binary
- *             | grouping ;
+ *            |  grouping
+ *            |  unary
+ *            |  binary ;
  *
- * literal    -> NUMBER | STRING | "true" | "false" | "null" ;
- * grouping   -> "(" expression ")" ;
- * unary      -> ( "-" | "!" ) expression ;
- * binary     -> expression operator expression ;
- * operator   -> "==" | "!=" | "<" | "<=" | ">=" | ">=" | "+" | "-"| "*" | "/" ;
- *
+ * There's not necessary to bring precedence rules into AST representation.
  */
 sealed trait Expr
 

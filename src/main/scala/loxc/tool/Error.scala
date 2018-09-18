@@ -9,5 +9,5 @@ object Error {
     s"[Line $numOfLine] [Error] ${where.getClass.getCanonicalName}: $message"
 }
 
-final case class ScannerException(private val message: String, private val cause: Throwable = None.orNull)
+final case class ParseError(private val message: String, private val cause: Throwable = None.orNull)
     extends Exception(message, cause)

@@ -7,8 +7,8 @@ import org.scalatest.{FlatSpec, Matchers}
 class ScannerSpec extends FlatSpec with Matchers with LazyLog {
 
   // Helper method to match with omitted line.
-  implicit class ExpectedTokens(completeTokens: List[CompleteToken]) {
-    def expectTokens(target: List[Token]): Unit =
+  implicit class ExpectedTokens(completeTokens: Array[CompleteToken]) {
+    def expectTokens(target: Token*): Unit =
       completeTokens.map(c => c.token).zip(target).foreach {
         case (s: Token, t: Token) => s should be(t)
       }
@@ -19,7 +19,7 @@ class ScannerSpec extends FlatSpec with Matchers with LazyLog {
   it should "lex single character tokens correctly" in {
     val braces = "( )"
     val tokens = Scanner.tokenize(braces)
-    tokens expectTokens List(LeftParen, RightParen, EOF)
+    tokens expectTokens (LeftParen, RightParen, EOF)
   }
 
   it should "lex multi characters tokens correctly" in {
@@ -48,13 +48,13 @@ class ScannerSpec extends FlatSpec with Matchers with LazyLog {
                         EOF)
 
     val tokens = Scanner.tokenize(expr)
-    tokens expectTokens expected
+    tokens expectTokens (expected: _*)
   }
 
   it should "lex string literal correctly" in {
     val expr = "let name = \"Jon Snow\""
     val tokens = Scanner.tokenize(expr)
-    tokens expectTokens List(Let, Ident, Equal, StringLiter, EOF)
+    tokens expectTokens (Let, Ident, Equal, StringLiter, EOF)
     tokens.drop(3).head should be(CompleteToken(StringLiter, 1, StringLiteral("Jon Snow")))
   }
 
@@ -63,7 +63,7 @@ class ScannerSpec extends FlatSpec with Matchers with LazyLog {
     val expected = List(Let, Ident, Equal, Number, EOF)
 
     val tokens = Scanner.tokenize(expr)
-    tokens expectTokens expected
+    tokens expectTokens (expected: _*)
     tokens.drop(3).head should be(CompleteToken(Number, 1, NumberLiteral(2.56)))
   }
 }

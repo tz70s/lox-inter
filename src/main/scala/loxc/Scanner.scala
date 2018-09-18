@@ -7,7 +7,7 @@ import tool.Error
 
 object Scanner {
 
-  def tokenize(source: String): List[CompleteToken] = Scanner(source).tokens
+  def tokenize(source: String): Array[CompleteToken] = Scanner(source).tokens
 
   private def apply(source: String): Scanner = new Scanner(source)
 }
@@ -22,14 +22,14 @@ class Scanner(private val source: String) {
   private var head = 0
   private var numOfLine = 1
 
-  def tokens: List[CompleteToken] = {
+  def tokens: Array[CompleteToken] = {
     while (!endOfSource) {
       pos = head
       nextToken()
     }
     // Not necessary, but for easier parsing.
     tokenStream += EOF(numOfLine)
-    tokenStream.toList
+    tokenStream.toArray
   }
 
   private def nextToken(): Unit =
